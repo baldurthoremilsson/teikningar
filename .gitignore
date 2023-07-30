@@ -37,3 +37,4 @@ next-env.d.ts
 # scraper
 scraper/scrape-*
 scraper/current-scrape.json
+scraper/addresses/
