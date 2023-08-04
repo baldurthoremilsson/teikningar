@@ -6,12 +6,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-type AddressType = Array<{
-  address: string,
-  normalized: string,
-  count: number,
-}>
 
 const MAX_SEARCH_RESULTS = 5;
 
@@ -29,33 +25,26 @@ const normalize = (s: string) => s.toLowerCase()
 
 const singularOrPlural = (i: number, singular: string, plural: string) => (i % 10 === 1 && i % 100 !== 11) ? singular : plural;
 
-export default function Search() {
-  const [addresses, setAddresses] = useState<AddressType>([]);
-  const [addressesLoaded, setAddressesLoaded] = useState(false);
-  const [searchBoxPlaceholder, setSearchBoxPlaceholder] = useState("Hleð gögnum");
-  const [searchResults, setSearchResults] = useState<AddressType>([]);
+export type AddressType = {
+  address: string,
+  normalized: string,
+  count: number,
+};
+
+type PropsType = {
+  addresses: Array<AddressType>,
+};
+
+export default function Search({ addresses }: PropsType) {
+  const [displaySearchResults, setDisplaySearchResults] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<Array<AddressType>>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
+  const [searchAddress, setSearchAddress] = useState<string>(useParams().address || "")
 
-  useEffect(()=>{
-    fetch('addresses.json')
-      .then(response => response.json())
-      .then(setAddresses);
-  }, []);
-
-  useEffect(() => {
-    setAddressesLoaded(Object.keys(addresses).length !== 0);
-  }, [addresses]);
-
-  useEffect(() => {
-    if(addressesLoaded) {
-      setSearchBoxPlaceholder("Heimilisfang");
-    } else {
-      setSearchBoxPlaceholder("Hleð gögnum");
-    }
-  }, [addressesLoaded]);
-
-  const searchFilter = useCallback((query: string) => {
+  const blah = useCallback((query: string) => {
+    setSearchAddress(query);
     if(query.length === 0) {
+      setDisplaySearchResults(false)
       setSearchResults([]);
     } else {
       const queries = query.split(" ").filter(q => q.length).map(normalize);
@@ -77,45 +66,54 @@ export default function Search() {
         }
       });
       setSearchResults(results);
+      setDisplaySearchResults(true);
     }
-  }, [setSearchResults, addresses]);
+  }, [addresses])
+
+  const pickSearchResult = useCallback((address: string) => {
+    setSearchAddress(address);
+    setDisplaySearchResults(false);
+    setSearchResults([]);
+  }, []);
 
   useEffect(() => {
     let classNames = [styles.searchBox];
-    if(searchResults.length > 0) {
+    if(displaySearchResults) {
         classNames.push(styles.searchBoxHasResults)
     }
     setSearchBoxClassNames(classNames);
-  }, [setSearchBoxClassNames, searchResults]);
+  }, [displaySearchResults]);
 
   return (
     <Container fluid className={styles.searchContainer}>
     <Form.Control
         className={searcBoxClassNames.join(' ')}
-        placeholder={searchBoxPlaceholder}
-        disabled={!addressesLoaded}
-        onChange={(e) => searchFilter(e.target.value)}
+        placeholder={"Heimilisfang"}
+        value={searchAddress}
+        onChange={(e) => blah(e.target.value)}
     />
+    {displaySearchResults &&
     <div className={styles.searchResultsContainer}>
     <ListGroup className={styles.searchResultsList}>
         {searchResults.slice(0, MAX_SEARCH_RESULTS).map((item) => (
-        <ListGroup.Item
-            key={item.address}
-            action
-            href={`/${item.normalized}`}
-            onClick={(e) => {e.preventDefault(); return false}}
-        >
+        <Link to={`/${item.address}`} key={item.address} className={"list-group-item"} onClick={() => pickSearchResult(item.address)}>
             {item.address}
             <div className={styles.searchResultsDrawingsCount}>{item.count} {singularOrPlural(item.count, "teikning", "teikningar")}</div>
-        </ListGroup.Item>
+        </Link>
         ))}
         {searchResults.length > MAX_SEARCH_RESULTS &&
         <ListGroup.Item className={styles.searchResultsExtraCount}>
             og {searchResults.length-MAX_SEARCH_RESULTS} til viðbótar
         </ListGroup.Item>
         }
+        {searchResults.length === 0 &&
+          <ListGroup.Item className={styles.searchResultsExtraCount}>
+            Fann engin heimilisföng
+          </ListGroup.Item>
+        }
     </ListGroup>
     </div>
+}
     </Container>
   )
 }

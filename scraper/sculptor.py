@@ -12,6 +12,12 @@ HOUSE_NUMBER_KEY = "204"
 ADDRESS_KEY = "210"
 DESCRIPTION_KEY = "214"
 
+BLEH = []
+
+
+def single_space(address: str) -> str:
+    return " ".join(part for part in address.split(" ") if part != "")
+
 
 def parse_address(address: str) -> set[str]:
     """
@@ -79,13 +85,15 @@ def parse_address(address: str) -> set[str]:
         if match:
             groupdict = match.groupdict()
             street_name = groupdict["street_name"]
+            if " " in street_name:
+                BLEH.append(addr_strip)
             start = int(groupdict["start"])
             end = int(groupdict["end"])
             while start <= end:
-                return_addresses.add(f"{street_name} {start}")
+                return_addresses.add(single_space(f"{street_name} {start}"))
                 start += 2
         else:
-            return_addresses.add(addr_strip)
+            return_addresses.add(single_space(addr_strip))
 
     return return_addresses
 
@@ -162,10 +170,10 @@ def main():
             addresses[addr].append(data)
 
     if True:
-        # os.makedirs("addresses", exist_ok=True)
-        # for address, drawings in tqdm(addresses.items()):
-        #    with open(f"addresses/{address}.json", "w") as f:
-        #        json.dump(drawings, f)
+        os.makedirs("addresses", exist_ok=True)
+        for address, drawings in tqdm(addresses.items()):
+            with open(f"addresses/{address}.json", "w") as f:
+                json.dump(drawings, f, ensure_ascii=False)
 
         address_index = []
         with open("addresses.json", "w") as f:
@@ -177,7 +185,7 @@ def main():
                         "count": len(drawings),
                     }
                 )
-            json.dump(address_index, f)
+            json.dump(address_index, f, ensure_ascii=False)
     else:
         import IPython
 
