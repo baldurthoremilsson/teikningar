@@ -7,6 +7,7 @@ import App from './components/app';
 import Frontpage from './components/frontpage';
 import Address from './components/address';
 import Overview from './components/overview';
+import Blueprint from './components/blueprint';
 
 
 async function addressesLoader() {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Overview />,
+          },
+          {
+            path: ":hash/:description?",
+            element: <Blueprint />,
           },
         ]
       },
