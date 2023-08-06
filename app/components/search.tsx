@@ -40,6 +40,11 @@ export default function Search({ addresses }: PropsType) {
   const [searchResults, setSearchResults] = useState<Array<AddressType>>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
   const [searchAddress, setSearchAddress] = useState<string>(useParams().address || "")
+  const { address } = useParams();
+
+  useEffect(() => {
+    setSearchAddress(address);
+  }, [address]);
 
   const blah = useCallback((query: string) => {
     setSearchAddress(query);
