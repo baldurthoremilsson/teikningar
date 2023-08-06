@@ -125,19 +125,18 @@ def convert_image(img):
     return parsed_addresses, data
 
 
-def normalize(address, replace_spaces=True):
+def normalize(address):
     return (
         address.lower()
-        .replace(" ", "-" if replace_spaces else " ")
         .replace("á", "a")
         .replace("é", "e")
         .replace("í", "i")
         .replace("ó", "o")
         .replace("ú", "u")
         .replace("ý", "y")
-        .replace("þ", "th")
+        .replace("þ", "t")
         .replace("æ", "ae")
-        .replace("ö", "oe")
+        .replace("ö", "o")
         .replace("ð", "d")
     )
 
@@ -181,7 +180,7 @@ def main():
                 address_index.append(
                     {
                         "address": address,
-                        "normalized": normalize(address, replace_spaces=False),
+                        "normalized": normalize(address),
                         "count": len(drawings),
                     }
                 )
