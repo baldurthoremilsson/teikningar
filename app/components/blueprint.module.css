@@ -1,3 +1,10 @@
 .blueprintContainer {
-    overflow: scroll;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.blueprintImg {
+    max-height: 100%;
+    max-width: 100%;
 }

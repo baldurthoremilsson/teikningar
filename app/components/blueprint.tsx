@@ -21,7 +21,7 @@ export default function Blueprint() {
   console.log(blueprint);
   return (
     <div className={styles.blueprintContainer}>
-      <img src={URL_PREFIX + blueprint.images["2400"].href}/>
+      <img src={URL_PREFIX + blueprint.images["2400"].href} className={styles.blueprintImg}/>
     </div>
   );
 }
