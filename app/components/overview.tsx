@@ -7,7 +7,7 @@ const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 const blueprintSortFn = (a, b) => a.date > b.date ? -1 : 1;
 
 export default function Overview() {
-  const blueprints = useOutletContext();
+  const { blueprints } = useOutletContext();
   return (
     <div className={styles.overviewContainer}>
       {blueprints.sort(blueprintSortFn).map(blueprint => (

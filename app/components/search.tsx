@@ -33,9 +33,10 @@ export type AddressType = {
 
 type PropsType = {
   addresses: Array<AddressType>,
+  currentBlueprint: null|object,
 };
 
-export default function Search({ addresses }: PropsType) {
+export default function Search({ addresses, currentBlueprint }: PropsType) {
   const [displaySearchResults, setDisplaySearchResults] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Array<AddressType>>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
@@ -46,7 +47,7 @@ export default function Search({ addresses }: PropsType) {
     setSearchAddress(address);
   }, [address]);
 
-  const blah = useCallback((query: string) => {
+  const updateSearch = useCallback((query: string) => {
     setSearchAddress(query);
     if(query.length === 0) {
       setDisplaySearchResults(false)
@@ -95,7 +96,7 @@ export default function Search({ addresses }: PropsType) {
         className={searcBoxClassNames.join(' ')}
         placeholder={"Heimilisfang"}
         value={searchAddress}
-        onChange={(e) => blah(e.target.value)}
+        onChange={(e) => updateSearch(e.target.value)}
     />
     {displaySearchResults &&
     <div className={styles.searchResultsContainer}>
@@ -119,6 +120,9 @@ export default function Search({ addresses }: PropsType) {
     </ListGroup>
     </div>
 }
+      {currentBlueprint &&
+        <div>{currentBlueprint.description} - {currentBlueprint.date}</div>
+      }
     </Container>
   )
 }

@@ -1,7 +1,8 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useOutletContext } from "react-router-dom";
 
 
 export default function Address() {
   const blueprints = useLoaderData();
-  return <Outlet context={blueprints} />;
+  const { setCurrentBlueprint } = useOutletContext();
+  return <Outlet context={{blueprints, setCurrentBlueprint}} />;
 }
