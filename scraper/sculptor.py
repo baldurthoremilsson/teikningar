@@ -121,6 +121,7 @@ def convert_image(img):
         "description": description,
         "hash": hash,
         "images": {preview["size"]: preview for preview in img["previews"]},
+        "originalHref": img["href"],
     }
     return parsed_addresses, data
 
