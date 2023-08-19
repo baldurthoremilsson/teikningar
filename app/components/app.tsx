@@ -10,7 +10,7 @@ export default function App() {
     <>
       <TopNav addresses={addresses} currentBlueprint={currentBlueprint} />
       <div className={styles.appContainer}>
-        <Outlet context={{setCurrentBlueprint}}/>
+        <Outlet context={{setCurrentBlueprint, addresses}}/>
       </div>
     </>
   );

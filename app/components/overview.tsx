@@ -1,4 +1,4 @@
-import { Card, CardGroup } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 import { Link, useOutletContext } from "react-router-dom";
 import styles from './overview.module.css';
 
@@ -7,7 +7,9 @@ const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 const blueprintSortFn = (a, b) => a.date > b.date ? -1 : 1;
 
 export default function Overview() {
-  const { blueprints } = useOutletContext();
+  const { blueprints, setCurrentBlueprint } = useOutletContext();
+  setCurrentBlueprint(null);
+
   return (
     <div className={styles.overviewContainer}>
       {blueprints.sort(blueprintSortFn).map(blueprint => (

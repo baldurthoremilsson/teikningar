@@ -23,7 +23,7 @@ export default function Blueprint() {
     if(description !== blueprint.description) {
       navigate(`../${blueprint.description}`, {replace: true, relative: "path"});
     }
-  }, [description, blueprint]);
+  }, [description, blueprint, navigate]);
 
   useEffect(() => {
     if(zoom) {
@@ -44,7 +44,6 @@ export default function Blueprint() {
   }, [zoom, className, scrollX, scrollY, containerRef]);
 
   const toggleZoom = useCallback((e) => {
-    console.log(e);
     let clickX = e.clientX - e.target.offsetLeft;
     let clickY = e.clientY - e.target.offsetTop;
     let targetWidth = e.target.offsetWidth;
