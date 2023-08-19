@@ -7,4 +7,13 @@
 .blueprintImg {
     max-height: 100%;
     max-width: 100%;
+    object-fit: contain;
+}
+
+.zoomIn {
+    cursor: zoom-in;
+}
+
+.zoomOut {
+    cursor: zoom-out;
 }
