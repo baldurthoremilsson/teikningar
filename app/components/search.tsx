@@ -91,38 +91,40 @@ export default function Search({ addresses, currentBlueprint }: PropsType) {
   }, [displaySearchResults]);
 
   return (
-    <Container fluid className={styles.searchContainer}>
-    <Form.Control
-        className={searcBoxClassNames.join(' ')}
-        placeholder={"Heimilisfang"}
-        value={searchAddress}
-        onChange={(e) => updateSearch(e.target.value)}
-    />
-    {displaySearchResults &&
-    <div className={styles.searchResultsContainer}>
-    <ListGroup className={styles.searchResultsList}>
-        {searchResults.slice(0, MAX_SEARCH_RESULTS).map((item) => (
-        <Link to={`/${item.address}`} key={item.address} className={"list-group-item"} onClick={() => pickSearchResult(item.address)}>
-            {item.address}
-            <div className={styles.searchResultsDrawingsCount}>{item.count} {singularOrPlural(item.count, "teikning", "teikningar")}</div>
-        </Link>
-        ))}
-        {searchResults.length > MAX_SEARCH_RESULTS &&
-        <ListGroup.Item className={styles.searchResultsExtraCount}>
-            og {searchResults.length-MAX_SEARCH_RESULTS} til viðbótar
-        </ListGroup.Item>
+    <>
+      <Container fluid className={styles.searchContainer}>
+        <Form.Control
+          className={searcBoxClassNames.join(' ')}
+          placeholder={"Heimilisfang"}
+          value={searchAddress}
+          onChange={(e) => updateSearch(e.target.value)}
+        />
+        {displaySearchResults &&
+          <div className={styles.searchResultsContainer}>
+            <ListGroup className={styles.searchResultsList}>
+              {searchResults.slice(0, MAX_SEARCH_RESULTS).map((item) => (
+                <Link to={`/${item.address}`} key={item.address} className={"list-group-item"} onClick={() => pickSearchResult(item.address)}>
+                  {item.address}
+                  <div className={styles.searchResultsDrawingsCount}>{item.count} {singularOrPlural(item.count, "teikning", "teikningar")}</div>
+                </Link>
+              ))}
+              {searchResults.length > MAX_SEARCH_RESULTS &&
+                <ListGroup.Item className={styles.searchResultsExtraCount}>
+                  og {searchResults.length-MAX_SEARCH_RESULTS} til viðbótar
+                </ListGroup.Item>
+              }
+              {searchResults.length === 0 &&
+                <ListGroup.Item className={styles.searchResultsExtraCount}>
+                  Fann engin heimilisföng
+                </ListGroup.Item>
+              }
+            </ListGroup>
+          </div>
         }
-        {searchResults.length === 0 &&
-          <ListGroup.Item className={styles.searchResultsExtraCount}>
-            Fann engin heimilisföng
-          </ListGroup.Item>
-        }
-    </ListGroup>
-    </div>
-}
+      </Container>
       {currentBlueprint &&
-        <div>{currentBlueprint.description} - {currentBlueprint.date}</div>
+        <div className={styles.blueprintInfoContainer}>{currentBlueprint.description} - {currentBlueprint.date}</div>
       }
-    </Container>
+    </>
   )
 }

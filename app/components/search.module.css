@@ -39,3 +39,7 @@ div.searchResultList .list-group-item:first {
 .searchResultsExtraCount {
     font-style: italic;
 }
+
+.blueprintInfoContainer {
+    text-align: center;
+}
