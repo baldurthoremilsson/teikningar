@@ -1,7 +1,7 @@
 "use client"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './search.module.css';
+import styles from './topnav.module.css';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -10,6 +10,7 @@ import { Link, useParams } from 'react-router-dom';
 
 
 const MAX_SEARCH_RESULTS = 5;
+const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
 const normalize = (s: string) => s.toLowerCase()
     .replace("á", "a")
@@ -36,7 +37,7 @@ type PropsType = {
   currentBlueprint: null|object,
 };
 
-export default function Search({ addresses, currentBlueprint }: PropsType) {
+export default function TopNav({ addresses, currentBlueprint }: PropsType) {
   const [displaySearchResults, setDisplaySearchResults] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Array<AddressType>>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
@@ -123,7 +124,12 @@ export default function Search({ addresses, currentBlueprint }: PropsType) {
         }
       </Container>
       {currentBlueprint &&
-        <div className={styles.blueprintInfoContainer}>{currentBlueprint.description} - {currentBlueprint.date}</div>
+        <div className={styles.blueprintInfoContainer}>
+          <Link to={`/${address}`} className={`link-info ${styles.infoLink}`}>Allar myndir</Link>
+          <span className={styles.infoDescription}>{currentBlueprint.description}</span>
+          <span className={styles.infoDate}>{currentBlueprint.date}</span>
+          <Link to={URL_PREFIX + currentBlueprint.originalHref} className={`link-info ${styles.infoLink}`} target="_blank">Skjalasafnsvefur</Link>
+        </div>
       }
     </>
   )

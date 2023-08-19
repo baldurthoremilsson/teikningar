@@ -43,3 +43,18 @@ div.searchResultList .list-group-item:first {
 .blueprintInfoContainer {
     text-align: center;
 }
+
+.infoLink {
+    padding: 0 10px;
+}
+
+.infoDescription {
+    padding: 0 10px;
+}
+
+.infoDate {
+    padding: 0 10px;
+    font-size: small;
+    font-style: italic;
+    color: gray;
+}
