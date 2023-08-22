@@ -37,7 +37,7 @@ const router = createBrowserRouter([
             element: <Overview />,
           },
           {
-            path: ":hash/:description?",
+            path: ":hash/:description*",
             element: <Blueprint />,
           },
         ]
