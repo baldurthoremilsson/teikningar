@@ -1,33 +1,36 @@
 import styles from './blueprint.module.css';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { AddressOutletContextType } from '../types';
 
 const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
 export default function Blueprint() {
   const navigate = useNavigate();
-  const { blueprints, setCurrentBlueprint } = useOutletContext();
+  const { blueprints, setCurrentBlueprint, setTitle } = useOutletContext<AddressOutletContextType>();
   const { address, hash, description } = useParams();
   const [zoom, setZoom] = useState(false);
   const [className, setClassName] = useState("");
   const [scrollX, setScrollX] = useState(0);
   const [scrollY, setScrollY] = useState(0);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  let blueprint = blueprints.find(blueprint => blueprint.hash === hash);
+  let blueprint = blueprints.find(blueprint => blueprint.hash === hash) || null;
   useEffect(() => {
     setCurrentBlueprint(blueprint);
   }, [blueprint, setCurrentBlueprint]);
   
   useEffect(() => {
-    document.title = `${blueprint.description} - ${address}`;
-  }, [address, blueprint]);
+    if(blueprint !== null) {
+      setTitle(`${blueprint.description} - ${address}`);
+    }
+  }, [address, blueprint, setTitle]);
 
   useEffect(() => {
-    if(description !== blueprint.description) {
+    if(blueprint !== null && description !== blueprint.description) {
       navigate(`/${address}/${hash}/${blueprint.description}`, {replace: true, relative: "path"});
     }
-  }, [description, blueprint, navigate]);
+  }, [address, blueprint, description, hash, navigate]);
 
   useEffect(() => {
     if(zoom) {
@@ -39,7 +42,7 @@ export default function Blueprint() {
 
   useEffect(() => {
     if(zoom) {
-        containerRef.current.parentElement.scrollTo({
+        containerRef.current?.parentElement?.scrollTo({
             left: scrollX,
             top: scrollY,
             behavior: "instant",
@@ -47,37 +50,44 @@ export default function Blueprint() {
     }
   }, [zoom, className, scrollX, scrollY, containerRef]);
 
-  const toggleZoom = useCallback((e) => {
-    let clickX = e.clientX - e.target.offsetLeft;
-    let clickY = e.clientY - e.target.offsetTop;
-    let targetWidth = e.target.offsetWidth;
-    let targetHeight = e.target.offsetHeight;
-    let deltaX = clickX / targetWidth;
-    let deltaY = clickY / targetHeight;
+  const toggleZoom = useCallback((event: React.MouseEvent<HTMLImageElement>) => {
+    if(blueprint !== null) {
+      let img = event.currentTarget;
+      let parent = img.parentElement as HTMLDivElement;
 
-    let containerWidth = e.target.parentElement.offsetWidth;
-    let containerHeight = e.target.parentElement.offsetHeight;
+      let clickX = event.clientX - img.offsetLeft;
+      let clickY = event.clientY - img.offsetTop;
+      let targetWidth = img.offsetWidth;
+      let targetHeight = img.offsetHeight;
+      let deltaX = clickX / targetWidth;
+      let deltaY = clickY / targetHeight;
 
-    let targetX = e.clientX - e.target.parentElement.offsetLeft;
-    let targetY = e.clientY - e.target.parentElement.offsetTop;
+      let containerWidth = parent.offsetWidth;
+      let containerHeight = parent.offsetHeight;
 
-    let imgWidth = blueprint.images["2400"].width;
-    let imgHeight = blueprint.images["2400"].height;
-    let imgX = Math.trunc(imgWidth * deltaX);
-    let imgY = Math.trunc(imgHeight * deltaY);
+      let targetX = event.clientX - parent.offsetLeft;
+      let targetY = event.clientY - parent.offsetTop;
 
-    let maxScrollX = Math.max(imgWidth - containerWidth, 0);
-    let maxScrollY = Math.max(imgHeight - containerHeight, 0);
+      let imgWidth = blueprint.images["2400"].width;
+      let imgHeight = blueprint.images["2400"].height;
+      let imgX = Math.trunc(imgWidth * deltaX);
+      let imgY = Math.trunc(imgHeight * deltaY);
 
-    setScrollX(Math.min(Math.max(imgX - targetX, 0), maxScrollX));
-    setScrollY(Math.min(Math.max(imgY - targetY, 0), maxScrollY));
+      let maxScrollX = Math.max(imgWidth - containerWidth, 0);
+      let maxScrollY = Math.max(imgHeight - containerHeight, 0);
 
-    setZoom(!zoom);
+      setScrollX(Math.min(Math.max(imgX - targetX, 0), maxScrollX));
+      setScrollY(Math.min(Math.max(imgY - targetY, 0), maxScrollY));
+
+      setZoom(!zoom);
+    }
   }, [zoom, blueprint]);
 
   return (
     <div className={styles.blueprintContainer} ref={containerRef}>
-      <img src={URL_PREFIX + blueprint.images["2400"].href} className={className} onClick={toggleZoom}/>
+      {blueprint !== null &&
+        <img src={URL_PREFIX + blueprint.images["2400"].href} className={className} onClick={toggleZoom} alt={blueprint.description}/>
+      }
     </div>
   );
 }

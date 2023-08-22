@@ -2,20 +2,21 @@ import Card from "react-bootstrap/Card";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import styles from './overview.module.css';
 import { useEffect } from "react";
+import { AddressOutletContextType, BlueprintInfo } from "../types";
 
 const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
-const blueprintSortFn = (a, b) => a.date > b.date ? -1 : 1;
+const blueprintSortFn = (a: BlueprintInfo, b: BlueprintInfo) => a.date > b.date ? -1 : 1;
 
 export default function Overview() {
-  const { blueprints, setCurrentBlueprint } = useOutletContext();
+  const { blueprints, setCurrentBlueprint, setTitle } = useOutletContext<AddressOutletContextType>();
   setCurrentBlueprint(null);
   const { address } = useParams();
   useEffect(() => {
     if(address) {
-      document.title = address;
+      setTitle(address);
     }
-  }, [address]);
+  }, [address, setTitle]);
 
   return (
     <div className={styles.overviewContainer}>

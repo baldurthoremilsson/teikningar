@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { AddressInfo, BlueprintInfo } from '../types';
 
 
 const MAX_SEARCH_RESULTS = 5;
@@ -26,26 +27,20 @@ const normalize = (s: string) => s.toLowerCase()
 
 const singularOrPlural = (i: number, singular: string, plural: string) => (i % 10 === 1 && i % 100 !== 11) ? singular : plural;
 
-export type AddressType = {
-  address: string,
-  normalized: string,
-  count: number,
-};
-
 type PropsType = {
-  addresses: Array<AddressType>,
-  currentBlueprint: null|object,
+  addresses: AddressInfo[],
+  currentBlueprint: BlueprintInfo | null,
 };
 
 export default function TopNav({ addresses, currentBlueprint }: PropsType) {
   const [displaySearchResults, setDisplaySearchResults] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<Array<AddressType>>([]);
+  const [searchResults, setSearchResults] = useState<AddressInfo[]>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
   const [searchAddress, setSearchAddress] = useState<string>(useParams().address || "")
   const { address } = useParams();
 
   useEffect(() => {
-    setSearchAddress(address);
+    setSearchAddress(address || "");
   }, [address]);
 
   const updateSearch = useCallback((query: string) => {

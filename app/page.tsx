@@ -8,21 +8,14 @@ import Frontpage from './components/frontpage';
 import Address from './components/address';
 import Overview from './components/overview';
 import Blueprint from './components/blueprint';
+import { BlueprintInfo, AddressInfo } from './types';
 
-
-async function addressesLoader() {
-  return fetch('/addresses.json');
-}
-
-async function addressLoader({ params }:  { params: { address: string }}) {
-  return fetch(`/addresses/${params.address}.json`);
-}
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    loader: addressesLoader,
+    loader: async (): Promise<AddressInfo[]> => (await fetch('/addresses.json')).json(),
     children: [
       {
         index: true,
@@ -30,7 +23,7 @@ const router = createBrowserRouter([
       }, {
         path: ":address",
         element: <Address />,
-        loader: addressLoader,
+        loader: async ({ params }): Promise<BlueprintInfo[]> => (await fetch(`/addresses/${params.address}.json`)).json(),
         children: [
           {
             index: true,

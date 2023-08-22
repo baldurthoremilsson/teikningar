@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import overviewStyles from './overview.module.css';
 import Card from "react-bootstrap/Card";
+import { AppOutletContextType, AddressAndBlueprintInfo } from "../types";
 
 const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
@@ -9,13 +10,13 @@ const randIndex = (array: Array<any>) => Math.trunc(Math.random()*array.length);
 const randItem = (array: Array<any>) => array[randIndex(array)];
 
 export default function Frontpage() {
-  const { addresses, setCurrentBlueprint } = useOutletContext();
-  const [randomBlueprints, setRandomBlueprints] = useState<any[]>([]);
+  const { addresses, setCurrentBlueprint, setTitle } = useOutletContext<AppOutletContextType>();
+  const [randomBlueprints, setRandomBlueprints] = useState<AddressAndBlueprintInfo[]>([]);
   setCurrentBlueprint(null);
 
   useEffect(() => {
-    document.title = "Teikningar";
-  }, []);
+    setTitle("Teikningar");
+  }, [setTitle]);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,11 +37,9 @@ export default function Frontpage() {
             blueprint: randItem(blueprints),
         };
       }));
-      console.log(blueprints);
       setRandomBlueprints(blueprints);
     }
     fetchData();
-    //setRandomBlueprints(randomAddresses);
   }, [addresses, setRandomBlueprints]);
 
   return (
