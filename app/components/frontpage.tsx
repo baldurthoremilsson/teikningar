@@ -24,8 +24,14 @@ export default function Frontpage() {
               randomAddresses.push(addresses[randomIndex]);
           }
       }
-      let blueprintsLists = await Promise.all(randomAddresses.map(async (addrinfo) => (await fetch(`/addresses/${addrinfo.address}.json`)).json()));
-      let blueprints = blueprintsLists.map(randItem);
+      let blueprints = await Promise.all(randomAddresses.map(async (addrinfo) => {
+        let response = await fetch(`/addresses/${addrinfo.address}.json`);
+        let blueprints = await response.json();
+        return {
+            address: addrinfo.address,
+            blueprint: randItem(blueprints),
+        };
+      }));
       console.log(blueprints);
       setRandomBlueprints(blueprints);
     }
@@ -37,8 +43,8 @@ export default function Frontpage() {
     <div>
       <h3 style={{width: "100%", textAlign: "center"}}>Teikningar af handahófi</h3>
       <div className={overviewStyles.overviewContainer}>
-      {randomBlueprints.map(blueprint => (
-        <Link to={`${blueprint.hash}/${blueprint.description}`} key={blueprint.hash}>
+      {randomBlueprints.map(({ address, blueprint }) => (
+        <Link to={`/${address}/${blueprint.hash}/${blueprint.description}`} key={blueprint.hash}>
           <Card className={`${overviewStyles.card} m-3`}>
             <Card.Img variant="top" src={URL_PREFIX + blueprint.images["400"].href} />
               <Card.Body>
