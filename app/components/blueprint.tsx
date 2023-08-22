@@ -7,7 +7,7 @@ const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 export default function Blueprint() {
   const navigate = useNavigate();
   const { blueprints, setCurrentBlueprint } = useOutletContext();
-  const { hash, description } = useParams();
+  const { address, hash, description } = useParams();
   const [zoom, setZoom] = useState(false);
   const [className, setClassName] = useState("");
   const [scrollX, setScrollX] = useState(0);
@@ -18,10 +18,14 @@ export default function Blueprint() {
   useEffect(() => {
     setCurrentBlueprint(blueprint);
   }, [blueprint, setCurrentBlueprint]);
+  
+  useEffect(() => {
+    document.title = `${blueprint.description} - ${address}`;
+  }, [address, blueprint]);
 
   useEffect(() => {
     if(description !== blueprint.description) {
-      navigate(`../${blueprint.description}`, {replace: true, relative: "path"});
+      navigate(`/${address}/${hash}/${blueprint.description}`, {replace: true, relative: "path"});
     }
   }, [description, blueprint, navigate]);
 

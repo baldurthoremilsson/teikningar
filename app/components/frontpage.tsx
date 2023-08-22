@@ -14,6 +14,10 @@ export default function Frontpage() {
   setCurrentBlueprint(null);
 
   useEffect(() => {
+    document.title = "Teikningar";
+  }, []);
+
+  useEffect(() => {
     async function fetchData() {
       let indices = [];
       let randomAddresses = [];
