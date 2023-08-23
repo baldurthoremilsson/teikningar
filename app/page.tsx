@@ -1,48 +1,17 @@
 "use client"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import dynamic from 'next/dynamic';
 import { StrictMode } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import App from './components/app';
-import Frontpage from './components/frontpage';
-import Address from './components/address';
-import Overview from './components/overview';
-import Blueprint from './components/blueprint';
-import { BlueprintInfo, AddressInfo } from './types';
 
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    loader: async (): Promise<AddressInfo[]> => (await fetch('/addresses.json')).json(),
-    children: [
-      {
-        index: true,
-        element: <Frontpage />,
-      }, {
-        path: ":address",
-        element: <Address />,
-        loader: async ({ params }): Promise<BlueprintInfo[]> => (await fetch(`/addresses/${params.address}.json`)).json(),
-        children: [
-          {
-            index: true,
-            element: <Overview />,
-          },
-          {
-            path: ":hash/:description*",
-            element: <Blueprint />,
-          },
-        ]
-      },
-    ],
-  },
-]);
+const Routes = dynamic(() => import("./routes"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
     <StrictMode>
-      <RouterProvider router={router} />
+      <Routes/>
     </StrictMode>
   )
 }
