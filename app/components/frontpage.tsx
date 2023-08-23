@@ -3,8 +3,8 @@ import { Link, useOutletContext } from "react-router-dom";
 import overviewStyles from './overview.module.css';
 import Card from "react-bootstrap/Card";
 import { AppOutletContextType, AddressAndBlueprintInfo } from "../types";
+import { DATA_URL_PREFIX, ORIGIN_URL_PREFIX } from '../constants';
 
-const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
 const randIndex = (array: Array<any>) => Math.trunc(Math.random()*array.length);
 const randItem = (array: Array<any>) => array[randIndex(array)];
@@ -30,7 +30,7 @@ export default function Frontpage() {
           }
       }
       let blueprints = await Promise.all(randomAddresses.map(async (addrinfo) => {
-        let response = await fetch(`/addresses/${addrinfo.address}.json`);
+        let response = await fetch(`${DATA_URL_PREFIX}/addresses/${addrinfo.address}.json`);
         let blueprints = await response.json();
         return {
             address: addrinfo.address,
@@ -49,7 +49,7 @@ export default function Frontpage() {
       {randomBlueprints.map(({ address, blueprint }) => (
         <Link to={`/${address}/${blueprint.hash}/${blueprint.description}`} key={blueprint.hash}>
           <Card className={`${overviewStyles.card} m-3`}>
-            <Card.Img variant="top" src={URL_PREFIX + blueprint.images["400"].href} />
+            <Card.Img variant="top" src={ORIGIN_URL_PREFIX + blueprint.images["400"].href} />
               <Card.Body>
                   <Card.Text>{blueprint.description} <div className={overviewStyles.cardDate}>{blueprint.date}</div></Card.Text>
               </Card.Body>

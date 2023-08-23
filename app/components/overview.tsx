@@ -3,8 +3,7 @@ import { Link, useOutletContext, useParams } from "react-router-dom";
 import styles from './overview.module.css';
 import { useEffect } from "react";
 import { AddressOutletContextType, BlueprintInfo } from "../types";
-
-const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
+import { ORIGIN_URL_PREFIX } from '../constants';
 
 const blueprintSortFn = (a: BlueprintInfo, b: BlueprintInfo) => a.date > b.date ? -1 : 1;
 
@@ -23,7 +22,7 @@ export default function Overview() {
       {blueprints.sort(blueprintSortFn).map(blueprint => (
         <Link to={`${blueprint.hash}/${blueprint.description}`} key={blueprint.hash}>
           <Card className={`${styles.card} m-3`}>
-            <Card.Img variant="top" src={URL_PREFIX + blueprint.images["400"].href} />
+            <Card.Img variant="top" src={ORIGIN_URL_PREFIX + blueprint.images["400"].href} />
               <Card.Body>
                 <Card.Text>{blueprint.description} <div className={styles.cardDate}>{blueprint.date}</div></Card.Text>
             </Card.Body>

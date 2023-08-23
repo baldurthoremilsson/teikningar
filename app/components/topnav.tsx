@@ -8,10 +8,10 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AddressInfo, BlueprintInfo } from '../types';
+import { ORIGIN_URL_PREFIX } from '../constants';
 
 
 const MAX_SEARCH_RESULTS = 5;
-const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
 
 const normalize = (s: string) => s.toLowerCase()
     .replace("á", "a")
@@ -123,7 +123,7 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
           <Link to={`/${address}`} className={`link-info ${styles.infoLink}`}>Allar myndir</Link>
           <span className={styles.infoDescription}>{currentBlueprint.description}</span>
           <span className={styles.infoDate}>{currentBlueprint.date}</span>
-          <Link to={URL_PREFIX + currentBlueprint.originalHref} className={`link-info ${styles.infoLink}`} target="_blank">Skjalasafnsvefur</Link>
+          <Link to={ORIGIN_URL_PREFIX + currentBlueprint.originalHref} className={`link-info ${styles.infoLink}`} target="_blank">Skjalasafnsvefur</Link>
         </div>
       }
     </>

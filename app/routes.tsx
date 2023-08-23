@@ -7,9 +7,8 @@ import Address from './components/address';
 import Overview from './components/overview';
 import Blueprint from './components/blueprint';
 import { BlueprintInfo, AddressInfo } from './types';
+import { DATA_URL_PREFIX } from './constants';
 
-
-const DATA_URL_PREFIX = process.env.NEXT_PUBLIC_DATA_URL_PREFIX || '';
 
 const router = createBrowserRouter([
   {

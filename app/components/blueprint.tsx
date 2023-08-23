@@ -2,8 +2,7 @@ import styles from './blueprint.module.css';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { AddressOutletContextType } from '../types';
-
-const URL_PREFIX = 'https://skjalasafn.reykjavik.is';
+import { ORIGIN_URL_PREFIX } from '../constants';
 
 export default function Blueprint() {
   const navigate = useNavigate();
@@ -86,7 +85,7 @@ export default function Blueprint() {
   return (
     <div className={styles.blueprintContainer} ref={containerRef}>
       {blueprint !== null &&
-        <img src={URL_PREFIX + blueprint.images["2400"].href} className={className} onClick={toggleZoom} alt={blueprint.description}/>
+        <img src={ORIGIN_URL_PREFIX + blueprint.images["2400"].href} className={className} onClick={toggleZoom} alt={blueprint.description}/>
       }
     </div>
   );
