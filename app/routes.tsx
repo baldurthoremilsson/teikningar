@@ -9,11 +9,13 @@ import Blueprint from './components/blueprint';
 import { BlueprintInfo, AddressInfo } from './types';
 
 
+const DATA_URL_PREFIX = process.env.NEXT_PUBLIC_DATA_URL_PREFIX || '';
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    loader: async (): Promise<AddressInfo[]> => (await fetch('/addresses.json')).json(),
+    loader: async (): Promise<AddressInfo[]> => (await fetch(`${DATA_URL_PREFIX}/addresses.json`)).json(),
     children: [
       {
         index: true,
@@ -21,7 +23,7 @@ const router = createBrowserRouter([
       }, {
         path: ":address",
         element: <Address />,
-        loader: async ({ params }): Promise<BlueprintInfo[]> => (await fetch(`/addresses/${params.address}.json`)).json(),
+        loader: async ({ params }): Promise<BlueprintInfo[]> => (await fetch(`${DATA_URL_PREFIX}/addresses/${params.address}.json`)).json(),
         children: [
           {
             index: true,
