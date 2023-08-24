@@ -51,7 +51,7 @@ export default function Frontpage() {
           <Card className={`${overviewStyles.card} m-3`}>
             <Card.Img variant="top" src={ORIGIN_URL_PREFIX + blueprint.images["400"].href} />
               <Card.Body>
-                  <Card.Text>{blueprint.description} <div className={overviewStyles.cardDate}>{blueprint.date}</div></Card.Text>
+                  <Card.Text>{blueprint.description} <span className={overviewStyles.cardDate}>{blueprint.date}</span></Card.Text>
               </Card.Body>
             <Card.Footer>{blueprint.address}</Card.Footer>
           </Card>

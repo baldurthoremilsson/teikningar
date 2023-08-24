@@ -24,7 +24,7 @@ export default function Overview() {
           <Card className={`${styles.card} m-3`}>
             <Card.Img variant="top" src={ORIGIN_URL_PREFIX + blueprint.images["400"].href} />
               <Card.Body>
-                <Card.Text>{blueprint.description} <div className={styles.cardDate}>{blueprint.date}</div></Card.Text>
+                <Card.Text>{blueprint.description} <span className={styles.cardDate}>{blueprint.date}</span></Card.Text>
             </Card.Body>
             <Card.Footer>{blueprint.address}</Card.Footer>
           </Card>
