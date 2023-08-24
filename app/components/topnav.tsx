@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AddressInfo, BlueprintInfo } from '../types';
 import { ORIGIN_URL_PREFIX } from '../constants';
+import Image from 'next/image';
 
 
 const MAX_SEARCH_RESULTS = 5;
@@ -88,35 +89,40 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
 
   return (
     <>
-      <Container fluid className={styles.searchContainer}>
-        <Form.Control
-          className={searcBoxClassNames.join(' ')}
-          placeholder={"Heimilisfang"}
-          value={searchAddress}
-          onChange={(e) => updateSearch(e.target.value)}
-        />
-        {displaySearchResults &&
-          <div className={styles.searchResultsContainer}>
-            <ListGroup className={styles.searchResultsList}>
-              {searchResults.slice(0, MAX_SEARCH_RESULTS).map((item) => (
-                <Link to={`/${item.address}`} key={item.address} className={"list-group-item"} onClick={() => pickSearchResult(item.address)}>
-                  {item.address}
-                  <div className={styles.searchResultsDrawingsCount}>{item.count} {singularOrPlural(item.count, "teikning", "teikningar")}</div>
-                </Link>
-              ))}
-              {searchResults.length > MAX_SEARCH_RESULTS &&
-                <ListGroup.Item className={styles.searchResultsExtraCount}>
-                  og {searchResults.length-MAX_SEARCH_RESULTS} til viðbótar
-                </ListGroup.Item>
-              }
-              {searchResults.length === 0 &&
-                <ListGroup.Item className={styles.searchResultsExtraCount}>
-                  Fann engin heimilisföng
-                </ListGroup.Item>
-              }
-            </ListGroup>
-          </div>
-        }
+      <Container fluid className={styles.logoContainer}>
+        <Link to="/">
+          <Image src="/logo.png" width={36} height={36} alt="logo" title="Forsíða" />
+        </Link>
+        <Container fluid className={styles.searchContainer}>
+          <Form.Control
+            className={searcBoxClassNames.join(' ')}
+            placeholder={"Heimilisfang"}
+            value={searchAddress}
+            onChange={(e) => updateSearch(e.target.value)}
+          />
+          {displaySearchResults &&
+            <div className={styles.searchResultsContainer}>
+              <ListGroup className={styles.searchResultsList}>
+                {searchResults.slice(0, MAX_SEARCH_RESULTS).map((item) => (
+                  <Link to={`/${item.address}`} key={item.address} className={"list-group-item"} onClick={() => pickSearchResult(item.address)}>
+                    {item.address}
+                    <div className={styles.searchResultsDrawingsCount}>{item.count} {singularOrPlural(item.count, "teikning", "teikningar")}</div>
+                  </Link>
+                ))}
+                {searchResults.length > MAX_SEARCH_RESULTS &&
+                  <ListGroup.Item className={styles.searchResultsExtraCount}>
+                    og {searchResults.length-MAX_SEARCH_RESULTS} til viðbótar
+                  </ListGroup.Item>
+                }
+                {searchResults.length === 0 &&
+                  <ListGroup.Item className={styles.searchResultsExtraCount}>
+                    Fann engin heimilisföng
+                  </ListGroup.Item>
+                }
+              </ListGroup>
+            </div>
+          }
+        </Container>
       </Container>
       {currentBlueprint &&
         <div className={styles.blueprintInfoContainer}>

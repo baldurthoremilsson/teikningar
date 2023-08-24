@@ -1,7 +1,12 @@
-.searchContainer {
+.logoContainer {
     max-width: 500px;
+    display: flex;
     padding-top: calc(var(--bs-gutter-x) * .5);
     padding-bottom: calc(var(--bs-gutter-x) * .5);
+}
+
+.searchContainer {
+    flex-grow: 1;
 }
 
 input.searchBox:focus {
