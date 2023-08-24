@@ -1,0 +1,18 @@
+.card {
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+}
+
+.cardDate {
+    font-size: small;
+    font-style: italic;
+    color: gray;
+    display: block;
+}
+
+.cardImage {
+    height: 298px;
+    width: 298px;
+    background: lightgray;
+}

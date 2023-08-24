@@ -4,6 +4,7 @@ import overviewStyles from './overview.module.css';
 import Card from "react-bootstrap/Card";
 import { AppOutletContextType, AddressAndBlueprintInfo } from "../types";
 import { DATA_URL_PREFIX, ORIGIN_URL_PREFIX } from '../constants';
+import BlueprintCardLink from "./blueprintCardLink";
 
 
 const randIndex = (array: Array<any>) => Math.trunc(Math.random()*array.length);
@@ -46,17 +47,7 @@ export default function Frontpage() {
     <div>
       <h3 style={{width: "100%", textAlign: "center"}}>Teikningar af handahófi</h3>
       <div className={overviewStyles.overviewContainer}>
-      {randomBlueprints.map(({ address, blueprint }) => (
-        <Link to={`/${address}/${blueprint.hash}/${blueprint.description}`} key={blueprint.hash}>
-          <Card className={`${overviewStyles.card} m-3`}>
-            <Card.Img variant="top" src={ORIGIN_URL_PREFIX + blueprint.images["400"].href} />
-              <Card.Body>
-                  <Card.Text>{blueprint.description} <span className={overviewStyles.cardDate}>{blueprint.date}</span></Card.Text>
-              </Card.Body>
-            <Card.Footer>{blueprint.address}</Card.Footer>
-          </Card>
-        </Link>
-      ))}
+        {randomBlueprints.map(({ address, blueprint }) => <BlueprintCardLink address={address} blueprint={blueprint} key={blueprint.hash}/>)}
       </div>
     </div>
   );
