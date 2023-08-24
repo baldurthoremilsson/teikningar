@@ -4,6 +4,6 @@ import { AppOutletContextType, BlueprintInfo } from "../types";
 
 export default function Address() {
   const blueprints = useLoaderData() as BlueprintInfo[];
-  const { setCurrentBlueprint, setTitle } = useOutletContext<AppOutletContextType>();
-  return <Outlet context={{blueprints, setCurrentBlueprint, setTitle}} />;
+  const { setCurrentBlueprint } = useOutletContext<AppOutletContextType>();
+  return <Outlet context={{blueprints, setCurrentBlueprint}} />;
 }

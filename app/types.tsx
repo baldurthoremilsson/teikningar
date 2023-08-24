@@ -30,12 +30,10 @@ export type AddressAndBlueprintInfo = {
 
 export type AppOutletContextType = {
     setCurrentBlueprint: Dispatch<SetStateAction<BlueprintInfo | null>>,
-    setTitle: Dispatch<SetStateAction<string>>,
     addresses: AddressInfo[],
 }
 
 export type AddressOutletContextType = {
     setCurrentBlueprint: Dispatch<SetStateAction<BlueprintInfo | null>>,
-    setTitle: Dispatch<SetStateAction<string>>,
     blueprints: BlueprintInfo[],
 }

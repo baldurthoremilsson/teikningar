@@ -8,14 +8,14 @@ import { ORIGIN_URL_PREFIX } from '../constants';
 const blueprintSortFn = (a: BlueprintInfo, b: BlueprintInfo) => a.date > b.date ? -1 : 1;
 
 export default function Overview() {
-  const { blueprints, setCurrentBlueprint, setTitle } = useOutletContext<AddressOutletContextType>();
+  const { blueprints, setCurrentBlueprint } = useOutletContext<AddressOutletContextType>();
   setCurrentBlueprint(null);
   const { address } = useParams();
   useEffect(() => {
     if(address) {
-      setTitle(address);
+      document.title = address;
     }
-  }, [address, setTitle]);
+  }, [address]);
 
   return (
     <div className={styles.overviewContainer}>

@@ -10,13 +10,13 @@ const randIndex = (array: Array<any>) => Math.trunc(Math.random()*array.length);
 const randItem = (array: Array<any>) => array[randIndex(array)];
 
 export default function Frontpage() {
-  const { addresses, setCurrentBlueprint, setTitle } = useOutletContext<AppOutletContextType>();
+  const { addresses, setCurrentBlueprint } = useOutletContext<AppOutletContextType>();
   const [randomBlueprints, setRandomBlueprints] = useState<AddressAndBlueprintInfo[]>([]);
   setCurrentBlueprint(null);
 
   useEffect(() => {
-    setTitle("Teikningar");
-  }, [setTitle]);
+    document.title = 'Teikningar';
+  }, []);
 
   useEffect(() => {
     async function fetchData() {

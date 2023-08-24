@@ -6,7 +6,7 @@ import { ORIGIN_URL_PREFIX } from '../constants';
 
 export default function Blueprint() {
   const navigate = useNavigate();
-  const { blueprints, setCurrentBlueprint, setTitle } = useOutletContext<AddressOutletContextType>();
+  const { blueprints, setCurrentBlueprint } = useOutletContext<AddressOutletContextType>();
   const { address, hash, description } = useParams();
   const [zoom, setZoom] = useState(false);
   const [className, setClassName] = useState("");
@@ -21,9 +21,9 @@ export default function Blueprint() {
   
   useEffect(() => {
     if(blueprint !== null) {
-      setTitle(`${blueprint.description} - ${address}`);
+      document.title = `${blueprint.description} - ${address}`;
     }
-  }, [address, blueprint, setTitle]);
+  }, [address, blueprint]);
 
   useEffect(() => {
     if(blueprint !== null && description !== blueprint.description) {
