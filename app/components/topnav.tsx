@@ -126,10 +126,10 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
       </Container>
       {currentBlueprint &&
         <div className={styles.blueprintInfoContainer}>
-          <Link to={`/${address}`} className={`link-info ${styles.infoLink}`}>Allar myndir</Link>
+          <Link to={`/${address}`} className={styles.infoLink}>Allar myndir</Link>
           <span className={styles.infoDescription}>{currentBlueprint.description}</span>
           <span className={styles.infoDate}>{currentBlueprint.date}</span>
-          <Link to={ORIGIN_URL_PREFIX + currentBlueprint.originalHref} className={`link-info ${styles.infoLink}`} target="_blank">Skjalasafnsvefur</Link>
+          <Link to={ORIGIN_URL_PREFIX + currentBlueprint.originalHref} className={styles.infoLink} target="_blank">Skjalasafnsvefur</Link>
         </div>
       }
     </>
