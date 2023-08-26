@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import dynamic from 'next/dynamic';
-import { StrictMode } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import dynamic from "next/dynamic";
+import { StrictMode } from "react";
 
 const Routes = dynamic(() => import("./routes"), {
   ssr: false,
@@ -11,7 +11,7 @@ const Routes = dynamic(() => import("./routes"), {
 export default function Home() {
   return (
     <StrictMode>
-      <Routes/>
+      <Routes />
     </StrictMode>
-  )
+  );
 }

@@ -1,71 +1,71 @@
 .logoContainer {
-    max-width: 500px;
-    display: flex;
-    padding-top: calc(var(--bs-gutter-x) * .5);
-    padding-bottom: calc(var(--bs-gutter-x) * .5);
+  max-width: 500px;
+  display: flex;
+  padding-top: calc(var(--bs-gutter-x) * 0.5);
+  padding-bottom: calc(var(--bs-gutter-x) * 0.5);
 }
 
 .searchContainer {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 input.searchBox:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 input.searchBoxHasResults {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .searchResultsContainer {
-    width: 100%;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 div.searchResultsList {
-    width: 100%;
-    position: absolute;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+  width: 100%;
+  position: absolute;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 div.searchResultList .list-group-item:first {
-    border-top: 0;
+  border-top: 0;
 }
 
 .searchResultsDrawingsCount {
-    font-size: small;
-    font-style: italic;
-    color: gray;
+  font-size: small;
+  font-style: italic;
+  color: gray;
 }
 
 .searchResultsExtraCount {
-    font-style: italic;
+  font-style: italic;
 }
 
 .blueprintInfoContainer {
-    text-align: center;
+  text-align: center;
 }
 
 .infoLink {
-    padding: 0 10px;
-    color: #2f529b;
+  padding: 0 10px;
+  color: #2f529b;
 }
 
 .infoDescription {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 .infoFavorite {
-    font-size: large;
-    cursor: pointer;
+  font-size: large;
+  cursor: pointer;
 }
 
 .infoDate {
-    padding: 0 10px;
-    font-size: small;
-    font-style: italic;
-    color: gray;
+  padding: 0 10px;
+  font-size: small;
+  font-style: italic;
+  color: gray;
 }

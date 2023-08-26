@@ -1,19 +1,19 @@
 .blueprintContainer {
-    height: 100%;
-    width: 100%;
-    text-align: center;
+  height: 100%;
+  width: 100%;
+  text-align: center;
 }
 
 .blueprintImg {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .zoomIn {
-    cursor: zoom-in;
+  cursor: zoom-in;
 }
 
 .zoomOut {
-    cursor: zoom-out;
+  cursor: zoom-out;
 }
