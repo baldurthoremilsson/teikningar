@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import overviewStyles from './overview.module.css';
-import Card from "react-bootstrap/Card";
-import { AppOutletContextType, AddressAndBlueprintInfo } from "../types";
-import { DATA_URL_PREFIX, ORIGIN_URL_PREFIX } from '../constants';
+import { AppOutletContextType, AddressAndBlueprintInfo, } from "@/lib/types";
+import { DATA_URL_PREFIX, MAX_RECENTLY_VIEWED_RESULTS } from '@/lib/constants';
 import BlueprintCardLink from "./blueprintCardLink";
+import { useLocalDBValue } from '@/lib/localdb'
+import styles from './frontpage.module.css';
 
 
 const randIndex = (array: Array<any>) => Math.trunc(Math.random()*array.length);
@@ -13,6 +14,7 @@ const randItem = (array: Array<any>) => array[randIndex(array)];
 export default function Frontpage() {
   const { addresses, setCurrentBlueprint } = useOutletContext<AppOutletContextType>();
   const [randomBlueprints, setRandomBlueprints] = useState<AddressAndBlueprintInfo[]>([]);
+  const { favorites, recentlyViewed } = useLocalDBValue();
   setCurrentBlueprint(null);
 
   useEffect(() => {
@@ -45,7 +47,19 @@ export default function Frontpage() {
 
   return (
     <div>
-      <h3 style={{width: "100%", textAlign: "center"}}>Teikningar af handahófi</h3>
+      {favorites.length > 0 && <>
+        <h3 className={styles.heading}>Uppáhalds ★</h3>
+        <div className={overviewStyles.overviewContainer}>
+          {favorites.map(({ address, blueprint }: AddressAndBlueprintInfo) => <BlueprintCardLink address={address} blueprint={blueprint} key={blueprint.hash} />)}
+        </div>
+      </>}
+      {recentlyViewed.length > 0 && <>
+        <h3 className={styles.heading}>Nýlega skoðað</h3>
+        <div className={overviewStyles.overviewContainer}>
+          {recentlyViewed.slice(0, MAX_RECENTLY_VIEWED_RESULTS).map(({ address, blueprint }: AddressAndBlueprintInfo) => <BlueprintCardLink address={address} blueprint={blueprint} key={blueprint.hash} />)}
+        </div>
+      </>}
+      <h3 className={styles.heading}>Teikningar af handahófi</h3>
       <div className={overviewStyles.overviewContainer}>
         {randomBlueprints.map(({ address, blueprint }) => <BlueprintCardLink address={address} blueprint={blueprint} key={blueprint.hash}/>)}
       </div>

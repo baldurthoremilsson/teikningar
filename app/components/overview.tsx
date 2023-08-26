@@ -1,7 +1,7 @@
 import { useOutletContext, useParams } from "react-router-dom";
 import styles from './overview.module.css';
 import { useEffect } from "react";
-import { AddressOutletContextType, BlueprintInfo } from "../types";
+import { AddressOutletContextType, BlueprintInfo } from "@/lib/types";
 import BlueprintCardLink from "./blueprintCardLink";
 
 const blueprintSortFn = (a: BlueprintInfo, b: BlueprintInfo) => a.date > b.date ? -1 : 1;

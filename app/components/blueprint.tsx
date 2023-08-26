@@ -1,8 +1,9 @@
 import styles from './blueprint.module.css';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { AddressOutletContextType } from '../types';
-import { ORIGIN_URL_PREFIX } from '../constants';
+import { AddressOutletContextType } from '@/lib/types';
+import { ORIGIN_URL_PREFIX } from '@/lib/constants';
+import LocalDB from '@/lib/localdb';
 
 export default function Blueprint() {
   const navigate = useNavigate();
@@ -20,8 +21,9 @@ export default function Blueprint() {
   }, [blueprint, setCurrentBlueprint]);
   
   useEffect(() => {
-    if(blueprint !== null) {
+    if(blueprint && address) {
       document.title = `${blueprint.description} - ${address}`;
+      LocalDB.addRecentlyViewed(blueprint, address);
     }
   }, [address, blueprint]);
 

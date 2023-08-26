@@ -58,6 +58,11 @@ div.searchResultList .list-group-item:first {
     padding: 0 10px;
 }
 
+.infoFavorite {
+    font-size: large;
+    cursor: pointer;
+}
+
 .infoDate {
     padding: 0 10px;
     font-size: small;

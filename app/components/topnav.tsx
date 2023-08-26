@@ -7,12 +7,12 @@ import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AddressInfo, BlueprintInfo } from '../types';
-import { ORIGIN_URL_PREFIX } from '../constants';
+import { AddressInfo, BlueprintInfo } from '@/lib/types';
+import { MAX_SEARCH_RESULTS, ORIGIN_URL_PREFIX } from '@/lib/constants';
 import Image from 'next/image';
+import LocalDB, { useLocalDBValue } from '@/lib/localdb';
 
 
-const MAX_SEARCH_RESULTS = 5;
 
 const normalize = (s: string) => s.toLowerCase()
     .replace("á", "a")
@@ -38,11 +38,17 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
   const [searchResults, setSearchResults] = useState<AddressInfo[]>([]);
   const [searcBoxClassNames, setSearchBoxClassNames] = useState<Array<string>>([styles.searchBox]);
   const [searchAddress, setSearchAddress] = useState<string>(useParams().address || "")
+  const [blueprintIsFavorite, setBlueprintIsFavorite] = useState(currentBlueprint !== null && LocalDB.isFavorite(currentBlueprint));
+  const localDBvalue = useLocalDBValue();
   const { address } = useParams();
 
   useEffect(() => {
     setSearchAddress(address || "");
   }, [address]);
+
+  useEffect(() => {
+    setBlueprintIsFavorite(currentBlueprint !== null && LocalDB.isFavorite(currentBlueprint));
+  }, [currentBlueprint, localDBvalue]);
 
   const updateSearch = useCallback((query: string) => {
     setSearchAddress(query);
@@ -87,6 +93,18 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
     setSearchBoxClassNames(classNames);
   }, [displaySearchResults]);
 
+  const markAsFavorite = useCallback(() => {
+    if(currentBlueprint && address) {
+      LocalDB.addFavorite(currentBlueprint, address);
+    }
+  }, [currentBlueprint, address]);
+
+  const unmarkAsFavorite = useCallback(() => {
+    if(currentBlueprint) {
+      LocalDB.removeFavorite(currentBlueprint);
+    }
+  }, [currentBlueprint]);
+
   return (
     <>
       <Container fluid className={styles.logoContainer}>
@@ -128,6 +146,12 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
         <div className={styles.blueprintInfoContainer}>
           <Link to={`/${address}`} className={styles.infoLink}>Allar myndir</Link>
           <span className={styles.infoDescription}>{currentBlueprint.description}</span>
+          {blueprintIsFavorite &&
+            <span className={styles.infoFavorite} title="Afmerkja sem uppáhalds" onClick={unmarkAsFavorite}>★</span>
+          }
+          {!blueprintIsFavorite &&
+            <span className={styles.infoFavorite} title="Merkja sem uppáhalds" onClick={markAsFavorite}>☆</span>
+          }
           <span className={styles.infoDate}>{currentBlueprint.date}</span>
           <Link to={ORIGIN_URL_PREFIX + currentBlueprint.originalHref} className={styles.infoLink} target="_blank">Skjalasafnsvefur</Link>
         </div>

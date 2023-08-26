@@ -37,3 +37,34 @@ export type AddressOutletContextType = {
     setCurrentBlueprint: Dispatch<SetStateAction<BlueprintInfo | null>>,
     blueprints: BlueprintInfo[],
 }
+
+
+export type Rectangle = {
+  x: number,
+  y: number,
+  height: number,
+  width: number,
+  color: string,
+}
+
+export type Annotation = {
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+  message: string,
+}
+
+export type Sketch = {
+  name: string,
+  rectangles: Rectangle[],
+  annotations: Annotation[],
+}
+
+export type Sketches = {[originalHref: string]: Sketch[]}
+
+export type DBSchemaV1 = {
+    recentlyViewed: AddressAndBlueprintInfo[],
+    favorites: AddressAndBlueprintInfo[],
+    sketches: Sketches,
+}

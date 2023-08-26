@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import { BlueprintInfo } from "../types";
+import { BlueprintInfo } from "@/lib/types";
 import styles from './blueprintCardLink.module.css';
-import { ORIGIN_URL_PREFIX } from "../constants";
+import { ORIGIN_URL_PREFIX } from "@/lib/constants";
 
 
 export default function BlueprintCardLink({ address, blueprint }: { address: string, blueprint: BlueprintInfo }) {
