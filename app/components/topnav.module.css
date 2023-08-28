@@ -21,7 +21,7 @@ input.searchBoxHasResults {
 .searchResultsContainer {
   width: 100%;
   position: relative;
-  z-index: 1;
+  z-index: 1000;
 }
 
 div.searchResultsList {
@@ -68,4 +68,11 @@ div.searchResultList .list-group-item:first {
   font-size: small;
   font-style: italic;
   color: gray;
+}
+
+.mapLink {
+  font-size: 30px;
+  text-decoration: none;
+  height: 38px;
+  margin-top: -3px;
 }

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { LatLngTuple } from "leaflet";
 
 export type BlueprintImage = {
   size: number;
@@ -21,6 +22,7 @@ export type AddressInfo = {
   address: string;
   normalized: string;
   count: number;
+  coords?: LatLngTuple;
 };
 
 export type AddressAndBlueprintInfo = {

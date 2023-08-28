@@ -6,6 +6,7 @@ import Frontpage from "./components/frontpage";
 import Address from "./components/address";
 import Overview from "./components/overview";
 import Blueprint from "./components/blueprint";
+import Map from "./components/map";
 import { BlueprintInfo, AddressInfo } from "@/lib/types";
 import { DATA_URL_PREFIX } from "@/lib/constants";
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Frontpage />,
+      },
+      {
+        path: "kort",
+        element: <Map />,
       },
       {
         path: ":address",

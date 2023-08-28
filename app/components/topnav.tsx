@@ -171,6 +171,9 @@ export default function TopNav({ addresses, currentBlueprint }: PropsType) {
             </div>
           )}
         </Container>
+        <Link to="/kort" className={styles.mapLink} title="Kort">
+          🗺️
+        </Link>
       </Container>
       {currentBlueprint && (
         <div className={styles.blueprintInfoContainer}>

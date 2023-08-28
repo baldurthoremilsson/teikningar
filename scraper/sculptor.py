@@ -3,6 +3,7 @@ import json
 import os
 import re
 import hashlib
+import csv
 from collections import defaultdict
 from tqdm import tqdm
 
@@ -169,6 +170,16 @@ def main():
         for addr in parsed_addresses:
             addresses[addr].append(data)
 
+    coords = {}
+    with open("Stadfangaskra.csv") as f:
+        stadfangaskra = csv.DictReader(f)
+        for row in stadfangaskra:
+            if int(row["POSTNR"]) < 200:
+                address = f"{row['HEITI_NF']} {row['HUSNR']}"
+                lat = float(row["N_HNIT_WGS84"])
+                lng = float(row["E_HNIT_WGS84"])
+                coords[address] = [lat, lng]
+
     if True:
         os.makedirs("addresses", exist_ok=True)
         for address, drawings in tqdm(addresses.items()):
@@ -178,13 +189,15 @@ def main():
         address_index = []
         with open("addresses.json", "w") as f:
             for address, drawings in addresses.items():
-                address_index.append(
-                    {
-                        "address": address,
-                        "normalized": normalize(address),
-                        "count": len(drawings),
-                    }
-                )
+                address_info = {
+                    "address": address,
+                    "normalized": normalize(address),
+                    "count": len(drawings),
+                }
+                if address in coords:
+                    address_info["coords"] = coords[address]
+
+                address_index.append(address_info)
             json.dump(address_index, f, ensure_ascii=False)
     else:
         import IPython
