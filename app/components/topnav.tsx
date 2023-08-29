@@ -11,6 +11,7 @@ import { AddressInfo, BlueprintInfo } from "@/lib/types";
 import { MAX_SEARCH_RESULTS, ORIGIN_URL_PREFIX } from "@/lib/constants";
 import Image from "next/image";
 import LocalDB, { useLocalDBValue } from "@/lib/localdb";
+import { singularOrPlural } from "@/lib/utils";
 
 const normalize = (s: string) =>
   s
@@ -25,9 +26,6 @@ const normalize = (s: string) =>
     .replace("þ", "th")
     .replace("æ", "ae")
     .replace("ö", "oe");
-
-const singularOrPlural = (i: number, singular: string, plural: string) =>
-  i % 10 === 1 && i % 100 !== 11 ? singular : plural;
 
 type PropsType = {
   addresses: AddressInfo[];
