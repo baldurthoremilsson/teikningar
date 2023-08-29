@@ -100,6 +100,14 @@ export default function Blueprint() {
           className={className}
           onClick={toggleZoom}
           alt={blueprint.description}
+          style={{
+            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${
+              ORIGIN_URL_PREFIX + blueprint.images["400"].href
+            })`,
+            backgroundSize: "cover",
+            minHeight: "400px",
+            minWidth: "400px",
+          }}
         />
       )}
     </div>
