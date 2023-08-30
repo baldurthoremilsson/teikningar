@@ -96,6 +96,22 @@ export default function Frontpage() {
           />
         ))}
       </div>
+      <footer className={styles.footer}>
+        <a href="mailto:baldur@baldur.biz">Baldur Þór</a> smíðaði og setti upp
+        <br />
+        Byggt á gögnum úr{" "}
+        <a href="https://skjalasafn.reykjavik.is" target="_blank">
+          skjalasafni Reykjavíkur
+        </a>
+        <br />
+        og kóðinn er á{" "}
+        <a
+          href="https://github.com/baldurthoremilsson/teikningar"
+          target="_blank"
+        >
+          Github
+        </a>
+      </footer>
     </div>
   );
 }

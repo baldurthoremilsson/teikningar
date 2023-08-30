@@ -2,3 +2,15 @@
   width: 100%;
   text-align: center;
 }
+
+.footer {
+  text-align: center;
+  font-size: 13px;
+  padding: 20px 0;
+  color: rgb(136, 136, 136);
+}
+
+.footer a {
+  color: #5474ba;
+  text-decoration: none;
+}
