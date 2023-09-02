@@ -16,6 +16,7 @@ import {
 import { AddressInfo, AppOutletContextType } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { singularOrPlural } from "@/lib/utils";
+import LocateControl from "@/lib/LocateControl";
 
 const CENTER_DEFAULTS: LatLngTuple = [64.1352099, -21.8992545];
 const ZOOM_DEFAULT = 13;
@@ -114,6 +115,7 @@ export default function Map() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapUpdates mapUpdateCallback={mapUpdateCallback} />
+      <LocateControl strings={{ title: "Finna mig" }} />
       {visibleAddresses.map((address) => (
         <CircleMarker
           center={address.coords as LatLngTuple}
