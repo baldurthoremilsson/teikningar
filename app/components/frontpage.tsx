@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import overviewStyles from "./overview.module.css";
 import { AppOutletContextType, AddressAndBlueprintInfo } from "@/lib/types";
 import { DATA_URL_PREFIX, MAX_RECENTLY_VIEWED_RESULTS } from "@/lib/constants";
@@ -17,6 +17,15 @@ export default function Frontpage() {
   const [randomBlueprints, setRandomBlueprints] = useState<
     AddressAndBlueprintInfo[]
   >([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.size !== 0) {
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
   const { favorites, recentlyViewed } = useLocalDBValue();
   setCurrentBlueprint(null);
 
