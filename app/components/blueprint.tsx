@@ -14,6 +14,8 @@ export default function Blueprint() {
   const [className, setClassName] = useState("");
   const [scrollX, setScrollX] = useState(0);
   const [scrollY, setScrollY] = useState(0);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgStyle, setImgStyle] = useState({});
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   let blueprint =
@@ -92,6 +94,24 @@ export default function Blueprint() {
     [zoom, blueprint],
   );
 
+  useEffect(
+    function () {
+      if (imgLoaded || blueprint === null) {
+        setImgStyle({});
+      } else {
+        setImgStyle({
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${
+            ORIGIN_URL_PREFIX + blueprint.images["400"].href
+          })`,
+          backgroundSize: "cover",
+          minHeight: "400px",
+          minWidth: "400px",
+        });
+      }
+    },
+    [blueprint, imgLoaded, setImgStyle],
+  );
+
   return (
     <div className={styles.blueprintContainer} ref={containerRef}>
       {blueprint !== null && (
@@ -100,13 +120,9 @@ export default function Blueprint() {
           className={className}
           onClick={toggleZoom}
           alt={blueprint.description}
-          style={{
-            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${
-              ORIGIN_URL_PREFIX + blueprint.images["400"].href
-            })`,
-            backgroundSize: "cover",
-            minHeight: "400px",
-            minWidth: "400px",
+          style={imgStyle}
+          onLoad={(e) => {
+            setImgLoaded(true);
           }}
         />
       )}
