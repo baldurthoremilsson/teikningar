@@ -16,16 +16,16 @@ import { singularOrPlural } from "@/lib/utils";
 const normalize = (s: string) =>
   s
     .toLowerCase()
-    .replace("á", "a")
-    .replace("é", "e")
-    .replace("í", "i")
-    .replace("ó", "o")
-    .replace("ú", "u")
-    .replace("ý", "y")
-    .replace("ð", "d")
-    .replace("þ", "th")
-    .replace("æ", "ae")
-    .replace("ö", "oe");
+    .replaceAll("á", "a")
+    .replaceAll("é", "e")
+    .replaceAll("í", "i")
+    .replaceAll("ó", "o")
+    .replaceAll("ú", "u")
+    .replaceAll("ý", "y")
+    .replaceAll("ð", "d")
+    .replaceAll("þ", "th")
+    .replaceAll("æ", "ae")
+    .replaceAll("ö", "o");
 
 type PropsType = {
   addresses: AddressInfo[];
