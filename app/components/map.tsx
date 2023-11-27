@@ -119,7 +119,7 @@ export default function Map() {
       {visibleAddresses.map((address) => (
         <CircleMarker
           center={address.coords as LatLngTuple}
-          radius={4}
+          radius={7}
           eventHandlers={{ click: () => clickHandler(address.address) }}
           key={address.address}
         >
