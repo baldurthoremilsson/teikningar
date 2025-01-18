@@ -58,10 +58,12 @@ def main():
     parser.add_argument("configfile")
     args = parser.parse_args()
 
-    print(args.configfile)
-
     config = read_config(args.configfile)
-    logging.basicConfig(filename=config.logfile, level=logging.INFO)
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        filename=config.logfile,
+        level=logging.INFO,
+    )
     logger.info("Running")
     return
     scrape(config.statusfile, config.sleep_milliseconds)
