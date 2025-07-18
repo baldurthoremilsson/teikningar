@@ -112,7 +112,9 @@ def rename_current_scrape_dir(data_dir, scrape_id):
 
 
 def append_data(data_dir: str, status: dict, address: str, img_data: dict) -> None:
-    address_file = os.path.join(data_dir, status["scrape_id"], f"{address}.json")
+    address_file = os.path.join(
+        data_dir, status["scrape_id"], "addresses", f"{address}.json"
+    )
     if os.path.exists(address_file):
         with open(address_file) as f:
             address_list = json.load(f)
