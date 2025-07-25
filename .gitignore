@@ -35,6 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 # scraper
-scraper/current-scrape.json
-scraper/addresses/
 scraper/scrape/
+scraper/aws-config.ini

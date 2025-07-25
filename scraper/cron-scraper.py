@@ -48,7 +48,6 @@ EMPTY_STATUS = {
     "scrape_id": None,
     "phase": PHASE_RESTART,
     "next_url": None,
-    "process_index": 0,
 }
 STATUSFILE = "status.json"
 HEADERS = {"Accept": "application/vnd.fotoware.assetlist+json, */*; q=0.01"}
@@ -64,7 +63,7 @@ def read_config(configfile: str) -> Config:
     config = Config(
         run_for_seconds=parser.getint("scrape", "run_for_seconds"),
         sleep_milliseconds=parser.getint("scrape", "sleep_milliseconds"),
-        logfile=parser.get("scrape", "scraper_logfile"),
+        logfile=parser.get("scrape", "logfile"),
         data_dir=parser.get("scrape", "data_dir"),
         log_to_stderr=parser.get("scrape", "log_to_stderr", fallback="false"),
     )
