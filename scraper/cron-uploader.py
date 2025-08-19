@@ -10,6 +10,7 @@ import csv
 import shutil
 import boto3
 from pathlib import Path
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -262,11 +263,9 @@ def main():
     process(paths, uploader)
 
 
-def main_wrapper():
+if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        logger.error(f"Error: {e}")
-
-
-main_wrapper()
+        stacktrace = traceback.format_exc()
+        logger.error(f"Error: {e}\n{stacktrace}")

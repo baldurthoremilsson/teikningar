@@ -11,6 +11,7 @@ from datetime import datetime
 import os
 import hashlib
 import re
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -106,8 +107,9 @@ def rename_current_scrape_dir(data_dir, scrape_id):
     if os.path.exists(last_dir):
         raise Exception(f"Can not rename current scrape dir, {last_dir} exists")
 
-    logger.info(f"Renaming current scrape dir: {scrape_dir} -> {last_dir}")
-    os.rename(scrape_dir, last_dir)
+    if os.path.exists(scrape_dir):
+        logger.info(f"Renaming current scrape dir: {scrape_dir} -> {last_dir}")
+        os.rename(scrape_dir, last_dir)
 
 
 def append_data(data_dir: str, status: dict, address: str, img_data: dict) -> None:
@@ -319,4 +321,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        stacktrace = traceback.format_exc()
+        logger.error(f"Error: {e}\n{stacktrace}")
