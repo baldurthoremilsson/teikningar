@@ -262,4 +262,11 @@ def main():
     process(paths, uploader)
 
 
-main()
+def main_wrapper():
+    try:
+        main()
+    except Exception as e:
+        logger.error(f"Error: {e}")
+
+
+main_wrapper()
